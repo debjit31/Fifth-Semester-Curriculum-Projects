@@ -1,0 +1,386 @@
+Enter password: *********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 12
+Server version: 8.0.17 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| fees               |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| week1              |
++--------------------+
+6 rows in set (0.02 sec)
+
+mysql> use fees;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_fees |
++----------------+
+| fees           |
+| student        |
++----------------+
+2 rows in set (0.01 sec)
+
+mysql> desc student;
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| Enroll_No     | int(10)      | NO   | PRI | NULL    |       |
+| Name          | varchar(40)  | NO   |     | NULL    |       |
+| address       | varchar(100) | NO   |     | NULL    |       |
+| class         | varchar(15)  | YES  |     | NULL    |       |
+| branch        | varchar(20)  | YES  |     | NULL    |       |
+| gender        | varchar(10)  | YES  |     | NULL    |       |
+| contact_no    | varchar(10)  | YES  |     | NULL    |       |
+| academic_year | varchar(20)  | YES  |     | NULL    |       |
+| category      | varchar(15)  | YES  |     | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+9 rows in set (0.01 sec)
+
+mysql> desc fees;;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| receipt_no       | int(10)     | NO   | PRI | NULL    |       |
+| tution_fees      | int(10)     | YES  |     | NULL    |       |
+| date_of_payment  | date        | YES  |     | NULL    |       |
+| other_fees       | int(7)      | YES  |     | NULL    |       |
+| mode_of_payment  | varchar(10) | YES  |     | NULL    |       |
+| development_fees | int(7)      | YES  |     | NULL    |       |
+| Name             | varchar(30) | NO   |     | NULL    |       |
+| Enroll_No        | int(10)     | YES  | MUL | NULL    |       |
++------------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+ERROR:
+No query specified
+
+mysql> desc fees;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| receipt_no       | int(10)     | NO   | PRI | NULL    |       |
+| tution_fees      | int(10)     | YES  |     | NULL    |       |
+| date_of_payment  | date        | YES  |     | NULL    |       |
+| other_fees       | int(7)      | YES  |     | NULL    |       |
+| mode_of_payment  | varchar(10) | YES  |     | NULL    |       |
+| development_fees | int(7)      | YES  |     | NULL    |       |
+| Name             | varchar(30) | NO   |     | NULL    |       |
+| Enroll_No        | int(10)     | YES  | MUL | NULL    |       |
++------------------+-------------+------+-----+---------+-------+
+8 rows in set (0.10 sec)
+
+mysql> select * from student;
++-----------+----------------------+--------------------------+-------------+--------+--------+------------+---------------+----------+
+| Enroll_No | Name                 | address                  | class       | branch | gender | contact_no | academic_year | category |
++-----------+----------------------+--------------------------+-------------+--------+--------+------------+---------------+----------+
+|    112445 | Grace Burgess        | 10, Downing Street       | Fourth Year | ECE    | Female | 985644521  | 2016-17       | General  |
+|    112446 | Polly Gray           | 13, Downing Street       | Second Year | ECE    | Female | 984412521  | 2018-19       | General  |
+|    234567 | Thomas Shelby        | 12, Downing Street       | First Year  | CSE    | Male   | 987654321  | 2018-19       | General  |
+|    456123 | Arthur Shelby        | 12, Downing Street       | Second Year | CSE    | Male   | 985654321  | 2018-19       | General  |
+|   1134456 | Polly Gray           | 14, Downing Street       | Third Year  | ECE    | Female | 984562521  | 2018-19       | General  |
+|   1234567 | Debjit Chattopadhyay | baksara, palpara, Howrah | Third Year  | CSE    | male   | 9064403885 | 2019-2020     | General  |
++-----------+----------------------+--------------------------+-------------+--------+--------+------------+---------------+----------+
+6 rows in set (0.00 sec)
+
+mysql> delete from student where Name = 'Debjit Chattopadhyay';
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from student;
++-----------+---------------+--------------------+-------------+--------+--------+------------+---------------+----------+
+| Enroll_No | Name          | address            | class       | branch | gender | contact_no | academic_year | category |
++-----------+---------------+--------------------+-------------+--------+--------+------------+---------------+----------+
+|    112445 | Grace Burgess | 10, Downing Street | Fourth Year | ECE    | Female | 985644521  | 2016-17       | General  |
+|    112446 | Polly Gray    | 13, Downing Street | Second Year | ECE    | Female | 984412521  | 2018-19       | General  |
+|    234567 | Thomas Shelby | 12, Downing Street | First Year  | CSE    | Male   | 987654321  | 2018-19       | General  |
+|    456123 | Arthur Shelby | 12, Downing Street | Second Year | CSE    | Male   | 985654321  | 2018-19       | General  |
+|   1134456 | Polly Gray    | 14, Downing Street | Third Year  | ECE    | Female | 984562521  | 2018-19       | General  |
++-----------+---------------+--------------------+-------------+--------+--------+------------+---------------+----------+
+5 rows in set (0.00 sec)
+
+mysql> delete from student where Namee = 'Polly Gray' and class = 'Third Year';
+ERROR 1054 (42S22): Unknown column 'Namee' in 'where clause'
+mysql> delete from student where Name = 'Polly Gray' and class = 'Third Year';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> delete from student where Name = 'Debjit Chattopadhyay';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from student;
++-----------+---------------+--------------------+-------------+--------+--------+------------+---------------+----------+
+| Enroll_No | Name          | address            | class       | branch | gender | contact_no | academic_year | category |
++-----------+---------------+--------------------+-------------+--------+--------+------------+---------------+----------+
+|    112445 | Grace Burgess | 10, Downing Street | Fourth Year | ECE    | Female | 985644521  | 2016-17       | General  |
+|    112446 | Polly Gray    | 13, Downing Street | Second Year | ECE    | Female | 984412521  | 2018-19       | General  |
+|    234567 | Thomas Shelby | 12, Downing Street | First Year  | CSE    | Male   | 987654321  | 2018-19       | General  |
+|    456123 | Arthur Shelby | 12, Downing Street | Second Year | CSE    | Male   | 985654321  | 2018-19       | General  |
++-----------+---------------+--------------------+-------------+--------+--------+------------+---------------+----------+
+4 rows in set (0.00 sec)
+
+mysql> insert into student values(112447, 'Lizzie Stark', '12, Downing Street', 'First Year', 'IT', 'Female', '5641327894', '2019-19', 'General');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values(112448, 'John Shelby', 'Oxford Street', 'Second Year', 'IT', 'Male', '5641127894', '2019-18', 'General');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values(112449, 'Finn Shelby', 'Oxford Street', 'Third Year', 'IT', 'Male', '5789127894', '2018-19', 'General');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from student;
++-----------+---------------+--------------------+-------------+--------+--------+------------+---------------+----------+
+| Enroll_No | Name          | address            | class       | branch | gender | contact_no | academic_year | category |
++-----------+---------------+--------------------+-------------+--------+--------+------------+---------------+----------+
+|    112445 | Grace Burgess | 10, Downing Street | Fourth Year | ECE    | Female | 985644521  | 2016-17       | General  |
+|    112446 | Polly Gray    | 13, Downing Street | Second Year | ECE    | Female | 984412521  | 2018-19       | General  |
+|    112447 | Lizzie Stark  | 12, Downing Street | First Year  | IT     | Female | 5641327894 | 2019-19       | General  |
+|    112448 | John Shelby   | Oxford Street      | Second Year | IT     | Male   | 5641127894 | 2019-18       | General  |
+|    112449 | Finn Shelby   | Oxford Street      | Third Year  | IT     | Male   | 5789127894 | 2018-19       | General  |
+|    234567 | Thomas Shelby | 12, Downing Street | First Year  | CSE    | Male   | 987654321  | 2018-19       | General  |
+|    456123 | Arthur Shelby | 12, Downing Street | Second Year | CSE    | Male   | 985654321  | 2018-19       | General  |
++-----------+---------------+--------------------+-------------+--------+--------+------------+---------------+----------+
+7 rows in set (0.00 sec)
+
+mysql> insert into student values(112450, 'Alfie Solomons', 'Oxford Street', 'Third Year', 'ECE', 'Male', '5789122394', '2018-19', 'General');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(112451, 'Fredie Thorne', 'Oxford Street', 'Third Year', 'ECE', 'Male', '5784452394', '2018-19', 'General');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values(112452, 'Chester Campbell', '11, Oxford Street', 'Third Year', 'ME', 'Male', '5784322394', '2018-19', 'General');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from student;
++-----------+------------------+--------------------+-------------+--------+--------+------------+---------------+----------+
+| Enroll_No | Name             | address            | class       | branch | gender | contact_no | academic_year | category |
++-----------+------------------+--------------------+-------------+--------+--------+------------+---------------+----------+
+|    112445 | Grace Burgess    | 10, Downing Street | Fourth Year | ECE    | Female | 985644521  | 2016-17       | General  |
+|    112446 | Polly Gray       | 13, Downing Street | Second Year | ECE    | Female | 984412521  | 2018-19       | General  |
+|    112447 | Lizzie Stark     | 12, Downing Street | First Year  | IT     | Female | 5641327894 | 2019-19       | General  |
+|    112448 | John Shelby      | Oxford Street      | Second Year | IT     | Male   | 5641127894 | 2019-18       | General  |
+|    112449 | Finn Shelby      | Oxford Street      | Third Year  | IT     | Male   | 5789127894 | 2018-19       | General  |
+|    112450 | Alfie Solomons   | Oxford Street      | Third Year  | ECE    | Male   | 5789122394 | 2018-19       | General  |
+|    112451 | Fredie Thorne    | Oxford Street      | Third Year  | ECE    | Male   | 5784452394 | 2018-19       | General  |
+|    112452 | Chester Campbell | 11, Oxford Street  | Third Year  | ME     | Male   | 5784322394 | 2018-19       | General  |
+|    234567 | Thomas Shelby    | 12, Downing Street | First Year  | CSE    | Male   | 987654321  | 2018-19       | General  |
+|    456123 | Arthur Shelby    | 12, Downing Street | Second Year | CSE    | Male   | 985654321  | 2018-19       | General  |
++-----------+------------------+--------------------+-------------+--------+--------+------------+---------------+----------+
+10 rows in set (0.00 sec)
+
+mysql> select * from fees;
+Empty set (0.01 sec)
+
+mysql> desc fees;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| receipt_no       | int(10)     | NO   | PRI | NULL    |       |
+| tution_fees      | int(10)     | YES  |     | NULL    |       |
+| date_of_payment  | date        | YES  |     | NULL    |       |
+| other_fees       | int(7)      | YES  |     | NULL    |       |
+| mode_of_payment  | varchar(10) | YES  |     | NULL    |       |
+| development_fees | int(7)      | YES  |     | NULL    |       |
+| Name             | varchar(30) | NO   |     | NULL    |       |
+| Enroll_No        | int(10)     | YES  | MUL | NULL    |       |
++------------------+-------------+------+-----+---------+-------+
+8 rows in set (0.02 sec)
+
+mysql> insert into fees values(112201, 60000, '2019-08-01', null, 'Cash', 1000, 'Fredie Thorne', 112451);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from student join fees;
++-----------+------------------+--------------------+-------------+--------+--------+------------+---------------+----------+------------+-------------+-----------------+------------+-----------------+------------------+---------------+-----------+
+| Enroll_No | Name             | address            | class       | branch | gender | contact_no | academic_year | category | receipt_no | tution_fees | date_of_payment | other_fees | mode_of_payment | development_fees | Name          | Enroll_No |
++-----------+------------------+--------------------+-------------+--------+--------+------------+---------------+----------+------------+-------------+-----------------+------------+-----------------+------------------+---------------+-----------+
+|    112445 | Grace Burgess    | 10, Downing Street | Fourth Year | ECE    | Female | 985644521  | 2016-17       | General  |     112201 |       60000 | 2019-08-01      |       NULL | Cash            |             1000 | Fredie Thorne |    112451 |
+|    112446 | Polly Gray       | 13, Downing Street | Second Year | ECE    | Female | 984412521  | 2018-19       | General  |     112201 |       60000 | 2019-08-01      |       NULL | Cash            |             1000 | Fredie Thorne |    112451 |
+|    112447 | Lizzie Stark     | 12, Downing Street | First Year  | IT     | Female | 5641327894 | 2019-19       | General  |     112201 |       60000 | 2019-08-01      |       NULL | Cash            |             1000 | Fredie Thorne |    112451 |
+|    112448 | John Shelby      | Oxford Street      | Second Year | IT     | Male   | 5641127894 | 2019-18       | General  |     112201 |       60000 | 2019-08-01      |       NULL | Cash            |             1000 | Fredie Thorne |    112451 |
+|    112449 | Finn Shelby      | Oxford Street      | Third Year  | IT     | Male   | 5789127894 | 2018-19       | General  |     112201 |       60000 | 2019-08-01      |       NULL | Cash            |             1000 | Fredie Thorne |    112451 |
+|    112450 | Alfie Solomons   | Oxford Street      | Third Year  | ECE    | Male   | 5789122394 | 2018-19       | General  |     112201 |       60000 | 2019-08-01      |       NULL | Cash            |             1000 | Fredie Thorne |    112451 |
+|    112451 | Fredie Thorne    | Oxford Street      | Third Year  | ECE    | Male   | 5784452394 | 2018-19       | General  |     112201 |       60000 | 2019-08-01      |       NULL | Cash            |             1000 | Fredie Thorne |    112451 |
+|    112452 | Chester Campbell | 11, Oxford Street  | Third Year  | ME     | Male   | 5784322394 | 2018-19       | General  |     112201 |       60000 | 2019-08-01      |       NULL | Cash            |             1000 | Fredie Thorne |    112451 |
+|    234567 | Thomas Shelby    | 12, Downing Street | First Year  | CSE    | Male   | 987654321  | 2018-19       | General  |     112201 |       60000 | 2019-08-01      |       NULL | Cash            |             1000 | Fredie Thorne |    112451 |
+|    456123 | Arthur Shelby    | 12, Downing Street | Second Year | CSE    | Male   | 985654321  | 2018-19       | General  |     112201 |       60000 | 2019-08-01      |       NULL | Cash            |             1000 | Fredie Thorne |    112451 |
++-----------+------------------+--------------------+-------------+--------+--------+------------+---------------+----------+------------+-------------+-----------------+------------+-----------------+------------------+---------------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> select * from student inner join fees;
++-----------+------------------+--------------------+-------------+--------+--------+------------+---------------+----------+------------+-------------+-----------------+------------+-----------------+------------------+---------------+-----------+
+| Enroll_No | Name             | address            | class       | branch | gender | contact_no | academic_year | category | receipt_no | tution_fees | date_of_payment | other_fees | mode_of_payment | development_fees | Name          | Enroll_No |
++-----------+------------------+--------------------+-------------+--------+--------+------------+---------------+----------+------------+-------------+-----------------+------------+-----------------+------------------+---------------+-----------+
+|    112445 | Grace Burgess    | 10, Downing Street | Fourth Year | ECE    | Female | 985644521  | 2016-17       | General  |     112201 |       60000 | 2019-08-01      |       NULL | Cash            |             1000 | Fredie Thorne |    112451 |
+|    112446 | Polly Gray       | 13, Downing Street | Second Year | ECE    | Female | 984412521  | 2018-19       | General  |     112201 |       60000 | 2019-08-01      |       NULL | Cash            |             1000 | Fredie Thorne |    112451 |
+|    112447 | Lizzie Stark     | 12, Downing Street | First Year  | IT     | Female | 5641327894 | 2019-19       | General  |     112201 |       60000 | 2019-08-01      |       NULL | Cash            |             1000 | Fredie Thorne |    112451 |
+|    112448 | John Shelby      | Oxford Street      | Second Year | IT     | Male   | 5641127894 | 2019-18       | General  |     112201 |       60000 | 2019-08-01      |       NULL | Cash            |             1000 | Fredie Thorne |    112451 |
+|    112449 | Finn Shelby      | Oxford Street      | Third Year  | IT     | Male   | 5789127894 | 2018-19       | General  |     112201 |       60000 | 2019-08-01      |       NULL | Cash            |             1000 | Fredie Thorne |    112451 |
+|    112450 | Alfie Solomons   | Oxford Street      | Third Year  | ECE    | Male   | 5789122394 | 2018-19       | General  |     112201 |       60000 | 2019-08-01      |       NULL | Cash            |             1000 | Fredie Thorne |    112451 |
+|    112451 | Fredie Thorne    | Oxford Street      | Third Year  | ECE    | Male   | 5784452394 | 2018-19       | General  |     112201 |       60000 | 2019-08-01      |       NULL | Cash            |             1000 | Fredie Thorne |    112451 |
+|    112452 | Chester Campbell | 11, Oxford Street  | Third Year  | ME     | Male   | 5784322394 | 2018-19       | General  |     112201 |       60000 | 2019-08-01      |       NULL | Cash            |             1000 | Fredie Thorne |    112451 |
+|    234567 | Thomas Shelby    | 12, Downing Street | First Year  | CSE    | Male   | 987654321  | 2018-19       | General  |     112201 |       60000 | 2019-08-01      |       NULL | Cash            |             1000 | Fredie Thorne |    112451 |
+|    456123 | Arthur Shelby    | 12, Downing Street | Second Year | CSE    | Male   | 985654321  | 2018-19       | General  |     112201 |       60000 | 2019-08-01      |       NULL | Cash            |             1000 | Fredie Thorne |    112451 |
++-----------+------------------+--------------------+-------------+--------+--------+------------+---------------+----------+------------+-------------+-----------------+------------+-----------------+------------------+---------------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> select * from student, fees where student.Enroll_No = fees.Enroll_No;
++-----------+---------------+---------------+------------+--------+--------+------------+---------------+----------+------------+-------------+-----------------+------------+-----------------+------------------+---------------+-----------+
+| Enroll_No | Name          | address       | class      | branch | gender | contact_no | academic_year | category | receipt_no | tution_fees | date_of_payment | other_fees | mode_of_payment | development_fees | Name          | Enroll_No |
++-----------+---------------+---------------+------------+--------+--------+------------+---------------+----------+------------+-------------+-----------------+------------+-----------------+------------------+---------------+-----------+
+|    112451 | Fredie Thorne | Oxford Street | Third Year | ECE    | Male   | 5784452394 | 2018-19       | General  |     112201 |       60000 | 2019-08-01      |       NULL | Cash            |             1000 | Fredie Thorne |    112451 |
++-----------+---------------+---------------+------------+--------+--------+------------+---------------+----------+------------+-------------+-----------------+------------+-----------------+------------------+---------------+-----------+
+1 row in set (0.00 sec)
+
+mysql> select * from student natural join fees;
++-----------+---------------+---------------+------------+--------+--------+------------+---------------+----------+------------+-------------+-----------------+------------+-----------------+------------------+
+| Enroll_No | Name          | address       | class      | branch | gender | contact_no | academic_year | category | receipt_no | tution_fees | date_of_payment | other_fees | mode_of_payment | development_fees |
++-----------+---------------+---------------+------------+--------+--------+------------+---------------+----------+------------+-------------+-----------------+------------+-----------------+------------------+
+|    112451 | Fredie Thorne | Oxford Street | Third Year | ECE    | Male   | 5784452394 | 2018-19       | General  |     112201 |       60000 | 2019-08-01      |       NULL | Cash            |             1000 |
++-----------+---------------+---------------+------------+--------+--------+------------+---------------+----------+------------+-------------+-----------------+------------+-----------------+------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from student;
++-----------+------------------+--------------------+-------------+--------+--------+------------+---------------+----------+
+| Enroll_No | Name             | address            | class       | branch | gender | contact_no | academic_year | category |
++-----------+------------------+--------------------+-------------+--------+--------+------------+---------------+----------+
+|    112445 | Grace Burgess    | 10, Downing Street | Fourth Year | ECE    | Female | 985644521  | 2016-17       | General  |
+|    112446 | Polly Gray       | 13, Downing Street | Second Year | ECE    | Female | 984412521  | 2018-19       | General  |
+|    112447 | Lizzie Stark     | 12, Downing Street | First Year  | IT     | Female | 5641327894 | 2019-19       | General  |
+|    112448 | John Shelby      | Oxford Street      | Second Year | IT     | Male   | 5641127894 | 2019-18       | General  |
+|    112449 | Finn Shelby      | Oxford Street      | Third Year  | IT     | Male   | 5789127894 | 2018-19       | General  |
+|    112450 | Alfie Solomons   | Oxford Street      | Third Year  | ECE    | Male   | 5789122394 | 2018-19       | General  |
+|    112451 | Fredie Thorne    | Oxford Street      | Third Year  | ECE    | Male   | 5784452394 | 2018-19       | General  |
+|    112452 | Chester Campbell | 11, Oxford Street  | Third Year  | ME     | Male   | 5784322394 | 2018-19       | General  |
+|    234567 | Thomas Shelby    | 12, Downing Street | First Year  | CSE    | Male   | 987654321  | 2018-19       | General  |
+|    456123 | Arthur Shelby    | 12, Downing Street | Second Year | CSE    | Male   | 985654321  | 2018-19       | General  |
++-----------+------------------+--------------------+-------------+--------+--------+------------+---------------+----------+
+10 rows in set (0.00 sec)
+
+mysql> alter table fees add column dues int(10) after tution_fees;
+Query OK, 0 rows affected, 1 warning (0.45 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> desc fees;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| receipt_no       | int(10)     | NO   | PRI | NULL    |       |
+| tution_fees      | int(10)     | YES  |     | NULL    |       |
+| dues             | int(10)     | YES  |     | NULL    |       |
+| date_of_payment  | date        | YES  |     | NULL    |       |
+| other_fees       | int(7)      | YES  |     | NULL    |       |
+| mode_of_payment  | varchar(10) | YES  |     | NULL    |       |
+| development_fees | int(7)      | YES  |     | NULL    |       |
+| Name             | varchar(30) | NO   |     | NULL    |       |
+| Enroll_No        | int(10)     | YES  | MUL | NULL    |       |
++------------------+-------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> alter table fees rename column tution_fees to tution_fees_paid int(10);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'int(10)' at line 1
+mysql> alter table fees rename column tution_fees  tution_fees_paid int(10);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'tution_fees_paid int(10)' at line 1
+mysql> alter table fees change tution_fees  tution_fees_paid int(10);
+Query OK, 0 rows affected, 1 warning (0.14 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> desc fees;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| receipt_no       | int(10)     | NO   | PRI | NULL    |       |
+| tution_fees_paid | int(10)     | YES  |     | NULL    |       |
+| dues             | int(10)     | YES  |     | NULL    |       |
+| date_of_payment  | date        | YES  |     | NULL    |       |
+| other_fees       | int(7)      | YES  |     | NULL    |       |
+| mode_of_payment  | varchar(10) | YES  |     | NULL    |       |
+| development_fees | int(7)      | YES  |     | NULL    |       |
+| Name             | varchar(30) | NO   |     | NULL    |       |
+| Enroll_No        | int(10)     | YES  | MUL | NULL    |       |
++------------------+-------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> select * from fees;
++------------+------------------+------+-----------------+------------+-----------------+------------------+---------------+-----------+
+| receipt_no | tution_fees_paid | dues | date_of_payment | other_fees | mode_of_payment | development_fees | Name          | Enroll_No |
++------------+------------------+------+-----------------+------------+-----------------+------------------+---------------+-----------+
+|     112201 |            60000 | NULL | 2019-08-01      |       NULL | Cash            |             1000 | Fredie Thorne |    112451 |
++------------+------------------+------+-----------------+------------+-----------------+------------------+---------------+-----------+
+1 row in set (0.00 sec)
+
+mysql> insert into fees values(112202, 40000, 20000, '2019-08-01',null,'Demand Draft', 1000, 'Chester Campbell', 112452);
+ERROR 1406 (22001): Data too long for column 'mode_of_payment' at row 1
+mysql> insert into fees values(112202, 40000, 20000, '2019-08-01',null,'Draft', 1000, 'Chester Campbell', 112452);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into fees values(112203, 50000, 10000, '2019-08-02',500,'Cash', 1000, 'Alfie Solomons', 112450);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into fees values(112204, 60000, null, '2019-08-02',null,'Cash', 1000, 'Thomas Shelby', 234567);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into fees values(112205, 60000, null, '2019-08-03',null,'Cheque', 1000, 'Arthur Shelby', 456123);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into fees values(112206, 30000, 30000, '2019-08-03',null,'Cheque', 1000, 'Arthur Shelby', 456123);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> delete from fees where receipt_no = 112206;
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into fees values(112206, 30000, 30000, '2019-08-03',null,'Cheque', 1000, 'John Shelby', 112448);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from fees;
++------------+------------------+-------+-----------------+------------+-----------------+------------------+------------------+-----------+
+| receipt_no | tution_fees_paid | dues  | date_of_payment | other_fees | mode_of_payment | development_fees | Name             | Enroll_No |
++------------+------------------+-------+-----------------+------------+-----------------+------------------+------------------+-----------+
+|     112201 |            60000 |  NULL | 2019-08-01      |       NULL | Cash            |             1000 | Fredie Thorne    |    112451 |
+|     112202 |            40000 | 20000 | 2019-08-01      |       NULL | Draft           |             1000 | Chester Campbell |    112452 |
+|     112203 |            50000 | 10000 | 2019-08-02      |        500 | Cash            |             1000 | Alfie Solomons   |    112450 |
+|     112204 |            60000 |  NULL | 2019-08-02      |       NULL | Cash            |             1000 | Thomas Shelby    |    234567 |
+|     112205 |            60000 |  NULL | 2019-08-03      |       NULL | Cheque          |             1000 | Arthur Shelby    |    456123 |
+|     112206 |            30000 | 30000 | 2019-08-03      |       NULL | Cheque          |             1000 | John Shelby      |    112448 |
++------------+------------------+-------+-----------------+------------+-----------------+------------------+------------------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> insert into fees values(112207, 20000, 40000, '2019-08-05',null,'Cheque', 1000, 'Finn Shelby', 112449);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into fees values(112208, 59000, 1000, '2019-08-05',null,'Cash', 1000, 'Polly Gray', 112449);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into fees values(112209,60000,null, '2019-08-05',null,'Cash', 1000, 'Grace Burgess', 112445);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into fees values(112210,60000,null, '2019-08-10',null,'Cash', 1000, 'Lizzie Stark', 112447);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from fees;
++------------+------------------+-------+-----------------+------------+-----------------+------------------+------------------+-----------+
+| receipt_no | tution_fees_paid | dues  | date_of_payment | other_fees | mode_of_payment | development_fees | Name             | Enroll_No |
++------------+------------------+-------+-----------------+------------+-----------------+------------------+------------------+-----------+
+|     112201 |            60000 |  NULL | 2019-08-01      |       NULL | Cash            |             1000 | Fredie Thorne    |    112451 |
+|     112202 |            40000 | 20000 | 2019-08-01      |       NULL | Draft           |             1000 | Chester Campbell |    112452 |
+|     112203 |            50000 | 10000 | 2019-08-02      |        500 | Cash            |             1000 | Alfie Solomons   |    112450 |
+|     112204 |            60000 |  NULL | 2019-08-02      |       NULL | Cash            |             1000 | Thomas Shelby    |    234567 |
+|     112205 |            60000 |  NULL | 2019-08-03      |       NULL | Cheque          |             1000 | Arthur Shelby    |    456123 |
+|     112206 |            30000 | 30000 | 2019-08-03      |       NULL | Cheque          |             1000 | John Shelby      |    112448 |
+|     112207 |            20000 | 40000 | 2019-08-05      |       NULL | Cheque          |             1000 | Finn Shelby      |    112449 |
+|     112208 |            59000 |  1000 | 2019-08-05      |       NULL | Cash            |             1000 | Polly Gray       |    112449 |
+|     112209 |            60000 |  NULL | 2019-08-05      |       NULL | Cash            |             1000 | Grace Burgess    |    112445 |
+|     112210 |            60000 |  NULL | 2019-08-10      |       NULL | Cash            |             1000 | Lizzie Stark     |    112447 |
++------------+------------------+-------+-----------------+------------+-----------------+------------------+------------------+-----------+
+10 rows in set (0.00 sec)
